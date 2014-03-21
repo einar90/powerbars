@@ -24,6 +24,22 @@
     prettyBars.scenebox.init(scene);
 
     var t = 0;
+    // Dz fjerner denne når vi får rydda i raycasting
+    var props_labels = {
+    size: 10.0,
+    height: 1.5
+    }
+
+    // Dz fjerner denne når vi får rydda i raycasting
+    var material_labels = new THREE.MeshBasicMaterial(
+    {
+      color: 0xffffff,
+    });
+    
+    // Dz fjerner denne når vi får rydda i raycasting
+    var material_line = new THREE.LineBasicMaterial({
+      color: 0x999999,
+    });
 
       var render = function() {
         //draw_height_label_backdrop();
