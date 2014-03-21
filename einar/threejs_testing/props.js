@@ -16,6 +16,23 @@ var year_first = 2000;
 var year_last  = 2014;
 
 
+
+// Resize window
+var onResizeWindow = function() {
+  WIDTH = window.innerWidth;
+  HEIGHT = window.innerHeight;
+
+  ASPECT = WIDTH / HEIGHT;
+
+  camera.aspect  = ASPECT;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(WIDTH, HEIGHT);
+}
+
+window.onresize = onResizeWindow;
+
+
 // Setting object properties
 
 
