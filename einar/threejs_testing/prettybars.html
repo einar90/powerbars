@@ -39,12 +39,11 @@
       bar_height_label.position.z = 400;
     }
 
-    function draw_height_line (INTERSECTED) {
+    function draw_height_line (endpos) {
       if (height_line != null) scene.remove(height_line);
       var line_geo = new THREE.Geometry();
       line_geo.vertices.push( new THREE.Vector3( 800, 250, 400 ) );
-      line_geo.vertices.push( new THREE.Vector3( INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z ) );
-
+      line_geo.vertices.push( endpos );
       height_line = new THREE.Line( line_geo, material_line );
       scene.add( height_line );
     }
@@ -89,7 +88,8 @@
                     if (prev_intersected != null) prev_intersected.material = material_column;
                     var bar_height = INTERSECTED.geometry.height.toFixed(4);
                     draw_height_label(bar_height);
-                    draw_height_line(INTERSECTED);
+                    var line_endpos = new THREE.Vector3(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
+                    draw_height_line(line_endpos);
                     INTERSECTED.material = material_highlight;
                     prev_intersected = INTERSECTED;
                   }
