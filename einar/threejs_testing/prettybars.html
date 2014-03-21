@@ -37,7 +37,6 @@
       bar_height_label.position.x = 800;
       bar_height_label.position.y = 250;
       bar_height_label.position.z = 400;
-      console.log(bar_height_label);
     }
 
     function draw_height_line (INTERSECTED) {
@@ -73,6 +72,7 @@
     }
 
     var prev_intersected = null;
+    console.log(INTERSECTED);
 
       var render = function() {
         //draw_height_label_backdrop();
@@ -81,22 +81,18 @@
         var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
         projector.unprojectVector( vector, camera );
         raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
-        var intersects = raycaster.intersectObjects( scene.children );
+        var intersects = raycaster.intersectObjects( scene.children, true );
         if ( intersects.length > 0 ) {
           if ( INTERSECTED != intersects[ 0 ].object ) {
               if (INTERSECTED) {
-                if (INTERSECTED.material == material_column) {
-                  if (INTERSECTED.geometry.height) {
-                    if (INTERSECTED.geometry.height != 40.0) {
-                      if (prev_intersected != null) prev_intersected.material = material_column;
-                      var bar_height = INTERSECTED.geometry.height.toFixed(4);
-                      draw_height_label(bar_height);
-                      draw_height_line(INTERSECTED);
-                      INTERSECTED.material = material_highlight;
-                      prev_intersected = INTERSECTED;
-                    }
+                  if (INTERSECTED.frontplane && INTERSECTED.frontplane == true) {
+                    if (prev_intersected != null) prev_intersected.material = material_column;
+                    var bar_height = INTERSECTED.geometry.height.toFixed(4);
+                    draw_height_label(bar_height);
+                    draw_height_line(INTERSECTED);
+                    INTERSECTED.material = material_highlight;
+                    prev_intersected = INTERSECTED;
                   }
-                }
               }
               INTERSECTED = intersects[ 0 ].object;
           }
@@ -119,8 +115,6 @@
       }
 
       render();
-        console.log(mouse);
-        console.log(INTERSECTED);
 
     </script>
 

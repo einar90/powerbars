@@ -22,6 +22,7 @@ function create_column (height) {
   scene.add(plane_front);
   plane_front.rotation.y += Math.PI*0;
   plane_front.position.z = 40;
+  plane_front.frontplane = true;
 
   var plane_top = new THREE.Mesh(geometry_plane_top, material_column);
   scene.add(plane_top);
@@ -35,6 +36,7 @@ function create_column (height) {
   object_column.add(plane_right);
   object_column.add(plane_front);
   object_column.add(plane_back);
+  object_column.columnobject = true;
   return object_column;
 }
 
