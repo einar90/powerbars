@@ -8,7 +8,6 @@
     <script src="js/helvetiker_regular.typeface.js"></script>
     <div id="container"></div>
 
-
     <script src="props.js"></script>
     <script src="setup.js"></script>
     <script src="scenebox.js"></script>
@@ -16,6 +15,8 @@
     <script src="labels.js"></script>
     <script src="lights.js"></script>
     <script src="raycaster.js"></script>
+    <script src="navigation.js"></script>
+
 
 
     <script>
@@ -24,19 +25,7 @@
     prettyBars.scenebox.init(scene);
 
     var t = 0;
-    // Dz fjerner denne når vi får rydda i raycasting
 
-
-    // Dz fjerner denne når vi får rydda i raycasting
-    var material_labels = new THREE.MeshBasicMaterial(
-    {
-      color: 0xffffff,
-    });
-
-    // Dz fjerner denne når vi får rydda i raycasting
-    var material_line = new THREE.LineBasicMaterial({
-      color: 0x999999,
-    });
 
       var render = function() {
         //draw_height_label_backdrop();
