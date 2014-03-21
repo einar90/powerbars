@@ -10,6 +10,19 @@ function onDocumentMouseMove( event ) {
 projector = new THREE.Projector();
 raycaster = new THREE.Raycaster();
 
+var props_labels = {
+  size: 10.0,
+  height: 1.5
+}
+
+var material_labels = new THREE.MeshBasicMaterial(
+{
+  color: 0xffffff,
+});
+
+var material_line = new THREE.LineBasicMaterial({
+  color: 0x999999,
+});
 
 var bar_height_label_geo = new THREE.TextGeometry("HEIGHT", props_labels);
 var bar_height_label = new THREE.Mesh(bar_height_label_geo, material_labels);
