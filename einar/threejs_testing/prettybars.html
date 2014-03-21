@@ -15,21 +15,75 @@
     <script src="create_cols.js"></script>
     <script src="labels.js"></script>
     <script src="lights.js"></script>
+    <script src="raycaster.js"></script>
 
 
     <script>
+
+
+    var year = year_last - i;
+    var text_label_geo = new THREE.TextGeometry(year, props_labels);
+    text_label = new THREE.Mesh(text_label_geo, material_labels);
+    scene.add(text_label);
+    text_label.rotation.x -= Math.PI * 0.2;
+    text_label.position.set(75*12, 5, -100*i+30);
+
       var t = 0;
+
+      var bar_height_label_geo = new THREE.TextGeometry("HEIGHT", props_labels);
+      var bar_height_label = new THREE.Mesh(bar_height_label_geo, material_labels);
+
       var render = function() {
+
+
+
+        // Find intersections
+        var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+        projector.unprojectVector( vector, camera );
+        raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+        var intersects = raycaster.intersectObjects( scene.children );
+        if ( intersects.length > 0 ) {
+          if ( INTERSECTED != intersects[ 0 ].object ) {
+              if (INTERSECTED) {
+                if (INTERSECTED.material == material_column) {
+                  if (INTERSECTED.geometry.height) {
+                    var bar_height = INTERSECTED.geometry.height;
+                    bar_height_label_geo = new THREE.TextGeometry(bar_height, props_labels);
+                    bar_height_label = new THREE.Mesh(bar_height_label_geo, material_labels);
+                    scene.add(bar_height_label);
+                    bar_height_label.position.x = 200;
+                    bar_height_label.position.y = 200;
+                    bar_height_label.position.z = 200;
+                    console.log(bar_height_label);
+                  }
+                  else {
+                    scene.remove(bar_height_label);
+                  }
+                }
+              }
+              INTERSECTED = intersects[ 0 ].object;
+          }
+        }
+        else {
+            INTERSECTED = null;
+        }
+
+
+
+        // Rotate the camera
         renderer.render(scene, camera);
         if (t < 90) {
-          camera.position.x -= 1.5;
+          camera.position.x -= 1;
           camera.position.y += 0.5;
-          camera.position.y -= 0.5;
+          camera.position.z -= 0.5;
         };
         t += 1;
         requestAnimationFrame(render);
       }
       render();
+        console.log(mouse);
+        console.log(INTERSECTED);
+
     </script>
 
 
