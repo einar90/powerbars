@@ -1,5 +1,5 @@
 
-var prettyBars.labels = (function() {
+prettyBars.labels = (function() {
   // Variables that depend each run
   var stateMap = {
     scene: null, 
@@ -58,7 +58,7 @@ var prettyBars.labels = (function() {
   };
 
   var init = function(scene, from, to) {
-    
+
     // Set the dependant variables
     initializeStateMap(scene, from, to);
 

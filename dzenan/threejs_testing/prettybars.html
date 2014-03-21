@@ -18,6 +18,10 @@
 
 
     <script>
+    console.log("Prettybars",prettyBars);
+    console.log("Prettybars",prettyBars.labels);
+    prettyBars.labels.init(scene, 2000, 2014);
+
       var t = 0;
       var render = function() {
         renderer.render(scene, camera);

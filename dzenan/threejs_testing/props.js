@@ -1,3 +1,4 @@
+var prettyBars  = {};
 // set the scene size
 var WIDTH = window.innerWidth,
   HEIGHT = window.innerHeight;
