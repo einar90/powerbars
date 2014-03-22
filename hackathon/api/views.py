@@ -94,7 +94,7 @@ def practical(request, mrid, year=2014, month=None):
 	else:
 		start = '%s-%s-01' % (year, month)
 		stop = '%s-%s-01' % (year, int(month) + 1)
-		interval = 'Week'
+		interval = 'Day'
 	
 	return meter(request, mrid, 'ActivePlus', start, stop, interval)
 	
