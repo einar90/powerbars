@@ -64,6 +64,9 @@ controllers.controller('MeterListCtrl', ['$scope', '$routeParams', '$http', func
 			var meters = data.meters;
 			// Cuts off the last element which is "Download"
 			meters = meters.slice(0, -1);
+			for(var i = 0; i < meters.length; i++) {
+				meters[i].name = getRandomName();
+			}
 			$scope.meters = meters;
 			$scope.next = data.next;
 		});
@@ -84,7 +87,7 @@ controllers.controller('MeterDetailCtrl', ['$scope', '$routeParams', '$http', fu
 controllers.controller('MeterVisualiseCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
 	$http.get('api/download/' + $routeParams.downloadId, {
 	}).
-	success( function (data) {		
+	success( function (data) {
 		$scope.Readings = data.meterReadings[0].meterReading.readings;
 		var monthList = [];
 		for(var i = 0; i < $scope.Readings.length; i++) {
