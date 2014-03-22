@@ -35,6 +35,7 @@ li.meter-list-li {
 
 li.meter-list-li a {
   font-family: "Inconsolata";
+  width: 20em;
 }
 
 #masthead {
