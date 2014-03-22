@@ -1,6 +1,10 @@
 var delta_year = 0;
 var transition_in_progress = false;
 
+
+var month_names = ["January", "February", "March", "April", "May", "June",
+                   "July", "August", "September", "October", "November", "December"];
+
 var navigation_material = new THREE.MeshBasicMaterial(
 {
   color: 0x0099cc,
@@ -104,6 +108,51 @@ function navigate_down () {
           .to({ y: prettyBars.labels.getYearsArray()[delta_year-1].position.y - 200 }, 600)
           .start();
 
+}
+
+function show_details(year,month) {
+  console.log("year: ", year);
+  console.log("month:", month);
+  monthview = true;
+
+  // Hiding year view
+  for (var yr = 0; yr < year_last-year_first; yr++) {
+    for (var mon = 0; mon < 12; mon++) {
+      new TWEEN.Tween(columns[yr][mon].position).to({
+          y: columns[yr][mon].position.y - 200
+        }, 600).start();
+    }
+    new TWEEN.Tween(prettyBars.labels.getYearsArray()[yr].position)
+          .to({ y: prettyBars.labels.getYearsArray()[yr].position.y - 100 }, 600)
+          .start();
+  }
+  for (i = 0; i < 12; i++) {
+    new TWEEN.Tween(prettyBars.labels.getMonthsArray()[i].position)
+          .to({ y: prettyBars.labels.getMonthsArray()[i].position.y - 100 }, 600)
+          .start();
+  }
+  scene.remove(height_line);
+  draw_height_label(month_names[month] + " " + (year_last-year));
+  draw_details_box("Back");
+}
+
+
+function nav_to_yearview() {
+  for (var yr = 0; yr < year_last-year_first; yr++) {
+    for (var mon = 0; mon < 12; mon++) {
+      new TWEEN.Tween(columns[yr][mon].position).to({
+          y: columns[yr][mon].position.y + 200
+        }, 600).start();
+    }
+    new TWEEN.Tween(prettyBars.labels.getYearsArray()[yr].position)
+          .to({ y: prettyBars.labels.getYearsArray()[yr].position.y + 100 }, 600)
+          .start();
+  }
+  for (i = 0; i < 12; i++) {
+    new TWEEN.Tween(prettyBars.labels.getMonthsArray()[i].position)
+          .to({ y: prettyBars.labels.getMonthsArray()[i].position.y + 100 }, 600)
+          .start();
+  }
 }
 
 

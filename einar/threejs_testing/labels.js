@@ -2,7 +2,7 @@
 prettyBars.labels = (function() {
   // Variables that depend each run
   var stateMap = {
-    scene: null, 
+    scene: null,
     fromYear: null,
     toYear: null,
     yearLabels: [],
@@ -34,7 +34,7 @@ prettyBars.labels = (function() {
     stateMap.fromYear = from;
     stateMap.toYear = to;
   };
-  
+
   initializeMaterials = function() {
     materials.lineMaterial = new THREE.LineBasicMaterial(
     {
@@ -111,16 +111,16 @@ prettyBars.labels = (function() {
     addMonthLabels();
     addYearLines();
   };
-    
-    
-    
+
+
+
   // Public functions
   return {
     init: init,
     getYearsArray: getYearLabels,
     getMonthsArray: getMonthLabels
   };
-  
+
 
 }());
 
