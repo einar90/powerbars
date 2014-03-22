@@ -134,10 +134,24 @@ function show_details(year,month) {
   scene.remove(height_line);
   draw_height_label(month_names[month] + " " + (year_last-year));
   draw_details_box("Back");
+  draw_month(month);
+  for (day = 0; day < month_days[month]; day++) {
+    new TWEEN.Tween(month_cols[day].position)
+          .to({ y: month_cols[day].geometry.height*0.5 }, Math.random()*500)
+          .start();
+  }
 }
 
 
 function nav_to_yearview() {
+  // Hide monthview
+  for (day = 0; day < month_days[active_column.month]; day++) {
+    new TWEEN.Tween(month_cols[day].position)
+          .to({ y: -month_cols[day].geometry.height*2 }, Math.random()*500)
+          .start();
+  }
+
+  // Show yearview
   for (var yr = 0; yr < year_last-year_first; yr++) {
     for (var mon = 0; mon < 12; mon++) {
       new TWEEN.Tween(columns[yr][mon].position).to({

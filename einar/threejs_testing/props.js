@@ -12,7 +12,7 @@ var VIEW_ANGLE = 45,
   FAR = 10000;
 
 // Setting script-wide variables
-var year_first = 2000;
+var year_first = 2010;
 var year_last  = 2014;
 
 

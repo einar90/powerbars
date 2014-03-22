@@ -45,7 +45,7 @@ def home(request, start=0, stop=None, step=10):
 
 	return HttpResponse(json.dumps(dictionary), content_type='application/json')
 
-def meter(request, mrid, seriesType='ActivePlus', start='2014-01-01', stop='2014-03-01', interval='Week'):
+def meter(request, mrid, seriesType='ActivePlus', start='2014-01-01', stop='2014-03-01', interval='Day'):
 	url = 'https://api.demosteinkjer.no/meters/%s' % mrid
 	values = {'seriesType': seriesType, 'dateFrom': start, 'dateTo': stop, 'intervalType': interval}
 	data = urlencode(values)

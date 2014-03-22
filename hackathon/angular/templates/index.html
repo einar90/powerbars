@@ -3,16 +3,28 @@
 <html lang="en" ng-app="hackathon">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Hackathon</title>
         <link rel="stylesheet" href="{% static 'css/app.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}"/>
+        <script src="{% static 'js/vendor/modernizr.min.js' %}"></script>
     </head>
     <body>
-        <ul class="menu">
-            <li><a href="#/meter">view1</a></li>
-        </ul>
-    
+
+        <div class="row">
+            <div id="masthead" class="columns large-12 text-center">PowerHack</div>
+        </div>
+
+        <div class="row">
+            <div id="desc" class="columns large-12 text-center">
+                <h1>Velg en strømmåler</h1>
+                <p>Du kan velge mellom strømmålerene som er listet opp under.</p>
+            </div>
+        </div>
+
+
         <div ng-view></div>
-        
+
           <!-- In production use:
           <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
         -->
@@ -21,5 +33,7 @@
         <script src="{% static 'js/app.js' %}"></script>
         <script src="{% static 'js/services.js' %}"></script>
         <script src="{% static 'js/controllers.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'js/foundation.min.js' %}"></script>
     </body>
 </html>
