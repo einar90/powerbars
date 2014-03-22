@@ -42,16 +42,16 @@ function draw_height_label (bar_height) {
   bar_height_label_geo = new THREE.TextGeometry(bar_height, props_labels);
   bar_height_label = new THREE.Mesh(bar_height_label_geo, material_labels);
   scene.add(bar_height_label);
-  bar_height_label.position.set(800,-100,400);
+  bar_height_label.position.set(750,-100,400);
   new TWEEN.Tween(bar_height_label.position)
-          .to({ x: 800, y:250, z: 400 }, 500)
+          .to({ x: 750, y:250, z: 400 }, 500)
           .start();
 }
 
 function draw_height_line (endpos) {
   if (height_line != null) scene.remove(height_line);
   var line_geo = new THREE.Geometry();
-  line_geo.vertices.push( new THREE.Vector3( 800, 250, 400 ) );
+  line_geo.vertices.push( new THREE.Vector3( 750, 250, 400 ) );
   line_geo.vertices.push( endpos );
   height_line = new THREE.Line( line_geo, material_line );
   scene.add( height_line );
@@ -63,7 +63,7 @@ function draw_details_box (text) {
   var details_geo = new THREE.TextGeometry(text, props_details);
   details_mesh = new THREE.Mesh(details_geo, material_labels);
   scene.add(details_mesh);
-  details_mesh.position.x = 800;
+  details_mesh.position.x = 750;
   details_mesh.position.y = 240;
   details_mesh.position.z = 400;
 
@@ -76,7 +76,7 @@ function draw_details_box (text) {
   });
   var details_backdrop = new THREE.Mesh(details_backdrop_geo, details_backdrop_material);
   scene.add(details_backdrop);
-  details_backdrop.position.x = 815;
+  details_backdrop.position.x = 765;
   details_backdrop.position.y = 240;
   details_backdrop.position.z = 402;
   details_backdrop.detailsbox = true;
