@@ -75,6 +75,42 @@ controllers.controller('MeterListCtrl', ['$scope', '$routeParams', '$http', func
 	$scope.initializeGETCall();
 }]);
 
+controllers.controller('VisualiseMeterCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
+
+
+	$scope.getYearLinkID = function(year) {
+		$scope.yearData[year] = null;
+		// For å få DL link til et år må vi gå til api/meter/meterID/year
+		$http.get('api/meter/' + $routeParams.meterId + '/year/' + year, {
+			}).
+			success( function (data) {
+				//$scope.yearData[year] = data;
+				var downloadID = data.download.split('/')[3];
+
+				$scope.getYearData(year, downloadID)
+
+		});
+	};
+
+	$scope.getYearData = function(year, year_downloadID) {
+		// Downloads hentes fra ...
+		$http.get('api/download/' + year_downloadID, {
+			}).
+			success( function (data) {
+				//$scope.yearData[year] = data;
+				$scope.yearData[year] = data;
+				console.log("YearData: ",data);
+		});
+	};
+
+	for(var i = 0; i < 3; i++) {
+		console.log("Index:", i);
+		$scope.getYearLinkID(2013 - i);
+	}
+
+
+}]);
+
 controllers.controller('MeterDetailCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
 	$http.get('api/meter/' + $routeParams.meterId, {
 	}).

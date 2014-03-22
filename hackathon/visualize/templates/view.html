@@ -1,0 +1,74 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <title>PowerHack</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="{% static 'js/three.js' %}"></script>
+    <script src="{% static 'js/Tween.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/helvetiker_regular.typeface.js' %}"></script>
+    
+
+    <script src="{% static 'js/ajax.js' %}"></script>
+    <script src="{% static 'js/props.js' %}"></script>
+    <script src="{% static 'js/setup.js' %}"></script>
+    <script src="{% static 'js/scenebox.js' %}"></script>
+    <script src="{% static 'js/create_cols.js' %}"></script>
+    <script src="{% static 'js/labels.js' %}"></script>
+    <script src="{% static 'js/lights.js' %}"></script>
+    <script src="{% static 'js/raycaster.js' %}"></script>
+    <script src="{% static 'js/navigation.js' %}"></script>
+
+
+
+    <script>
+    prettyBars.labels.init(scene, 2010, 2014);
+    prettyBars.lights.init(scene, camera, 500);
+    prettyBars.scenebox.init(scene);
+
+    var monthview = false;
+
+
+    var t = 0;
+
+
+      var render = function() {
+        //draw_height_label_backdrop();
+
+        // Find intersections
+        var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+        projector.unprojectVector( vector, camera );
+        raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+        var intersects = raycaster.intersectObjects( scene.children );
+        if ( intersects.length > 0 ) {
+          if ( INTERSECTED != intersects[ 0 ].object ) {
+              INTERSECTED = intersects[ 0 ].object;
+          }
+        }
+        else {
+            INTERSECTED = null;
+        }
+
+
+        // Rotate the camera
+        renderer.render(scene, camera);
+        if (t < 90) {
+          camera.position.x -= 1;
+          camera.position.y += 0.5;
+          camera.position.z -= 0.5;
+        };
+        t += 1;
+        requestAnimationFrame(render);
+        TWEEN.update();
+      }
+
+      render();
+      $scope.initialize();
+
+    </script>
+
+
+  </body>
+</html>
