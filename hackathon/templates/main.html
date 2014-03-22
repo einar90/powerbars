@@ -1,0 +1,19 @@
+{% load staticfiles %}
+
+<head>
+	<title>Hackathon</title>
+</head>
+<body>
+	<p>Hello and Welcome!</p>
+
+	{% if errors %}
+		<p>Errors: {{ errors }}</p>
+	{% else %}
+		{{ soup }}
+
+		{% for link in tuples %}
+			<p>{{ link }}</p>
+		{% endfor %}
+	{% endif %}
+
+</body>
