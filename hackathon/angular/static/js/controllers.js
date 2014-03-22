@@ -6,6 +6,12 @@ var controllers = angular.module('controllers', []);
 
 controllers.controller('MeterListCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
 	//encoded = window.atob('0a88d7571c964d879e4d36609c3f08a4:95ff08db29b04b0598e192fc9d22bb00')
+	var getRandomName = function() {
+		var firstNames = ["Emil", "Einar", "Dzenan", "Simon", "Petter", "Bjarne", "Bjørnar", "Dag", "Jarl", "Harald"];
+		var lastNames = ["Bull", "Berg", "Koffi", "Nordmann", "Stordalen", "Blåfjell", "Trying"];
+		return (firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)]);
+	}
+
 	$scope.currentIndex = 0;
 	$scope.lastIndex = 10;
 	$scope.currentStep = 10;
@@ -18,6 +24,9 @@ controllers.controller('MeterListCtrl', ['$scope', '$routeParams', '$http', func
 			var meters = data.meters;
 			// Cuts off the last element which is "Download"
 			meters = meters.slice(0, -1);
+			for(var i = 0; i < meters.length; i++) {
+				meters[i].name = getRandomName();
+			}
 			$scope.meters = meters;
 			$scope.next = data.next;
 		});
