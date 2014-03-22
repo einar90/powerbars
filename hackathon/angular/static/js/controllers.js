@@ -43,6 +43,9 @@ controllers.controller('MeterListCtrl', ['$scope', '$routeParams', '$http', func
 			var meters = data.meters;
 			// Cuts off the last element which is "Download"
 			meters = meters.slice(0, -1);
+			for(var i = 0; i < meters.length; i++) {
+				meters[i].name = getRandomName();
+			}
 			$scope.meters = meters;
 			$scope.next = data.next;
 		});
