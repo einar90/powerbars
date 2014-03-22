@@ -12,11 +12,8 @@ config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/meter/:meterId', {templateUrl: 'template/meter-detail', controller: 'MeterDetailCtrl'});
 	$routeProvider.when('/visualise/:downloadId', {templateUrl: 'template/meter-visualise', controller: 'MeterVisualiseCtrl'});
 	$routeProvider.otherwise({redirectTo: '/meter'});
-}]).config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('_[');
-  $interpolateProvider.endSymbol(']_');
+}]).
+config( function ($interpolateProvider) {
+	$interpolateProvider.startSymbol('_[');
+	$interpolateProvider.endSymbol(']_');
 });
-
-// config(['$httpProvider', function ($httpProvider) {
-// 	$httpProvider.default.headers.common['Authorization'] = 'Basic '
-// }]);

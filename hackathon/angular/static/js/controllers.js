@@ -67,8 +67,6 @@ controllers.controller('MeterListCtrl', ['$scope', '$routeParams', '$http', func
 	};
 
 	$scope.initializeGETCall();
-
-	
 }]);
 
 controllers.controller('MeterDetailCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
@@ -76,7 +74,7 @@ controllers.controller('MeterDetailCtrl', ['$scope', '$routeParams', '$http', fu
 	}).
 	success( function (data) {
 		$scope.meter = data;
-		$scope.meter.downloadId = data.download.split('/')[4];
+		$scope.meter.downloadId = data.download.split('/')[3];
 	});
 }]);
 
