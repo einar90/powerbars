@@ -1,5 +1,8 @@
-function create_column (height) {
-  return new THREE.Mesh(new THREE.CubeGeometry(40,height,40), material_column);
+function create_column (height, year, month) {
+  column = new THREE.Mesh(new THREE.CubeGeometry(40,height,40), material_column);
+  column.year = year;
+  column.month = month;
+  return column;
 }
 
 /* function move_columns(columns) {
@@ -42,7 +45,7 @@ var columns = create_calendar_arrray(year_last-year_first);
 for (var year = 0; year < year_last - year_first; year++) {
   for (var month = 0; month < 12; month++)
   {
-    columns[year][month] = create_column(Math.random()*100);
+    columns[year][month] = create_column(Math.random()*100, year, month);
   };
 };
 
