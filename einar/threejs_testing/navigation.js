@@ -36,6 +36,7 @@ function create_arrow() {
 var arrow_down = create_arrow();
 var arrow_up = create_arrow();
 
+
 scene.add(arrow_down);
 scene.add(arrow_up);
 
@@ -55,10 +56,10 @@ arrow_down.navdown = true;
 arrow_up.navcontrol = true;
 arrow_up.navup = true;
 
+
 function navigate_up () {
   if (delta_year <= 0 || transition_in_progress == true) return;
   delta_year -= 1;
-  console.log(delta_year);
   for (var year = 0; year < year_last-year_first; year++) {
     for (var month = 0; month < 12; month++) {
       new TWEEN.Tween(columns[year][month].position).to({
@@ -83,7 +84,6 @@ function navigate_up () {
 function navigate_down () {
   if (delta_year >= year_last-year_first || transition_in_progress == true) return;
   delta_year += 1;
-  console.log(delta_year);
   for (var year = 0; year < year_last-year_first; year++) {
     for (var month = 0; month < 12; month++) {
       new TWEEN.Tween(columns[year][month].position)

@@ -71,6 +71,15 @@ function draw_height_label_backdrop() {
 
 var prev_intersected = null;
 
+var onMouseClick = function() {
+  navigation_detection(INTERSECTED);
+  column_detection(INTERSECTED);
+}
+
+
+window.onmousedown = onMouseClick;
+
+
 
 function column_detection (INTERSECTED) {
   if (INTERSECTED.geometry.width == 40 && INTERSECTED.geometry.depth == 40) {
