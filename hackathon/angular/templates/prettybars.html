@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<script src="{% static js/visualization/three.js %}"></script>
+<script src="{% static js/visualization/Tween.js %}"></script>
+<script src="{% static js/visualization/helvetiker_regular.typeface.js %}"></script>
+
+<div id="container"></div>
+
+<script src="{% static js/visualization/props.js %}"></script>
+<script src="{% static js/visualization/setup.js %}"></script>
+<script src="{% static js/visualization/scenebox.js %}"></script>
+<script src="{% static js/visualization/create_cols.js %}"></script>
+<script src="{% static js/visualization/labels.js %}"></script>
+<script src="{% static js/visualization/lights.js %}"></script>
+<script src="{% static js/visualization/raycaster.js %}"></script>
+<script src="{% static js/visualization/navigation.js %}"></script>
+
+
+
+<script>
+prettyBars.labels.init(scene, 2010, 2014);
+prettyBars.lights.init(scene, camera, 500);
+prettyBars.scenebox.init(scene);
+
+var monthview = false;
+
+
+var t = 0;
+
+
+  var render = function() {
+    //draw_height_label_backdrop();
+
+    // Find intersections
+    var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+    projector.unprojectVector( vector, camera );
+    raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+    var intersects = raycaster.intersectObjects( scene.children );
+    if ( intersects.length > 0 ) {
+      if ( INTERSECTED != intersects[ 0 ].object ) {
+          INTERSECTED = intersects[ 0 ].object;
+      }
+    }
+    else {
+        INTERSECTED = null;
+    }
+
+
+    // Rotate the camera
+    renderer.render(scene, camera);
+    if (t < 90) {
+      camera.position.x -= 1;
+      camera.position.y += 0.5;
+      camera.position.z -= 0.5;
+    };
+    t += 1;
+    requestAnimationFrame(render);
+    TWEEN.update();
+  }
+
+  render();
+
+</script>
