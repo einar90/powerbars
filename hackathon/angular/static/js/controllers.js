@@ -10,8 +10,10 @@ controllers.controller('MeterListCtrl', ['$scope', '$http', function ($scope, $h
 	$http.get('api', {
 	}).
 	success( function (data) {
-		console.log("JSON-DATA",data);
-		$scope.meters = data.meters;
+		var meters = data.meters;
+		// Cuts off the last element which is "Download"
+		meters = meters.slice(0, -1);
+		$scope.meters = meters;
 	});
 }]);
 
@@ -19,24 +21,17 @@ controllers.controller('MeterDetailCtrl', ['$scope', '$routeParams', '$http', fu
 	$http.get('api/meter/' + $routeParams.meterId, {
 	}).
 	success( function (data) {
-		console.log("JSON-DATA-METER:",data);
-		console.log("ROuterparams", $routeParams);
 		$scope.meter = data;
 		$scope.meter.downloadId = data.download.split('/')[4];
-		console.log("Scope", $scope);
-
 	});
 }]);
 
 controllers.controller('MeterVisualiseCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
 	$http.get('api/download/' + $routeParams.downloadId, {
 	}).
-	success( function (data) {
-		console.log("JSON-DATA-METER:",data);
-		
-		$scope.meter = data;
-		console.log("Scope", $scope);
+	success( function (data) {		
+		$scope.Readings = data;
+		console.log("Scope", $scope.Readings);
 
 	});
-	console.log("ROuterparams visii", $routeParams);
 }]);
