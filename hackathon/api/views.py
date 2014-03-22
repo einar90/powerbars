@@ -68,8 +68,8 @@ def meter(request, mrid, seriesType='ActivePlus', start='2014-01-01', stop='2014
 	except HTTPError, e:
 		context['errors'] = str(e)
 
-	return render(request, 'meter.html', context)
-	#return HttpResponse(json.dumps(dictionary, indent=4), content_type='application/json')
+	#return render(request, 'meter.html', context)
+	return HttpResponse(json.dumps(dictionary, indent=4), content_type='application/json')
 
 def practical(request, mrid, year=2014, month=None):
 	if not month:
