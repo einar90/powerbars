@@ -36,13 +36,16 @@ var bar_height_label = new THREE.Mesh(bar_height_label_geo, material_labels);
 var height_line = null;
 
 function draw_height_label (bar_height) {
-  scene.remove(bar_height_label);
+  new TWEEN.Tween(bar_height_label.position)
+          .to({ y: 700 }, 2000)
+          .start();
   bar_height_label_geo = new THREE.TextGeometry(bar_height, props_labels);
   bar_height_label = new THREE.Mesh(bar_height_label_geo, material_labels);
   scene.add(bar_height_label);
-  bar_height_label.position.x = 800;
-  bar_height_label.position.y = 250;
-  bar_height_label.position.z = 400;
+  bar_height_label.position.set(800,-100,400);
+  new TWEEN.Tween(bar_height_label.position)
+          .to({ x: 800, y:250, z: 400 }, 500)
+          .start();
 }
 
 function draw_height_line (endpos) {
