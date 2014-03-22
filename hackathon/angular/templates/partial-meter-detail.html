@@ -1,0 +1,19 @@
+<p>This is the partial for view 2.</p>
+
+<script>
+	$.get(
+		'https://api.demosteinkjer.no/downloads/190',
+		{
+			'username':,
+			'password':,
+		},
+		function (data, status, xhr) {
+
+		},
+		"json"
+	);
+</script>
+<p>
+  Showing of 'interpolate' filter:
+  {{ 'Current version is v%VERSION%.' | interpolate }}
+</p>
