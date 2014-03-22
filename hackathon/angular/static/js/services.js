@@ -15,10 +15,10 @@ services.value('version', '0.1');
 // 		});
 // }]);
 
-// phonecatServices.factory('Phone', ['$resource', 
+// phonecatServices.factory('Meter', ['$resource', 
 // 	function($resource) {
-// 		return $resource('phones/:phoneId.json', {}, {
-// 			query: {method: 'GET', params: {phoneId: 'phones'}, isArray:true}
+// 		return $resource('api/meter/:meterID', {}, {
+// 			query: {method: 'GET', params: {meterID: 'phones'}, isArray:true}
 // 		});
 // }]);
 
