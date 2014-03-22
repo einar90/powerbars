@@ -5,13 +5,28 @@ function create_column (height, year, month) {
   return column;
 }
 
-/* function move_columns(columns) {
-    for (var year = 0; year < columns.length; year++) {
-    for (var month = 0; month < 12; month++) {
-      columns[year][month].position.y += columns[year][month].geometry.height*2;
-    }
-  };
-} */
+function create_monthview_col (height) {
+  column = new THREE.Mesh(new THREE.CubeGeometry(20,height,20), material_column);
+  return column;
+}
+
+
+month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+month_measurements = [];
+for (var mon = 0; mon < 31; mon++) {
+  month_measurements[mon] = Math.random()*200;
+}
+
+month_cols = [];
+
+function draw_month(month) {
+  for (var day = 0; day < month_days[month]; day++){
+    month_cols[day] = create_monthview_col(month_measurements[day]);
+    scene.add(month_cols[day]);
+    month_cols[day].position.x = day*30-65;
+    month_cols[day].position.y = -month_cols[day].geometry.height*2;
+  }
+}
 
 function draw_columns(columns) {
   for (var year = 0; year < columns.length; year++) {
