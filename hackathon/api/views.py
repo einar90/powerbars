@@ -4,7 +4,7 @@ from urllib import urlencode
 from urllib2 import Request, urlopen, HTTPError
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 def home(request, start=0, stop=None, step=10):
@@ -68,5 +68,33 @@ def meter(request, mrid, seriesType='ActivePlus', start='2014-01-01', stop='2014
 	except HTTPError, e:
 		context['errors'] = str(e)
 
-	#return render(request, 'meter.html', context)
-	return HttpResponse(json.dumps(dictionary, indent=4), content_type='application/json')
+	return render(request, 'meter.html', context)
+	#return HttpResponse(json.dumps(dictionary, indent=4), content_type='application/json')
+
+def practical(request, mrid, year=2014, month=None):
+	if not month:
+		start = '%s-01-01' % year
+		stop = '%s-12-31' % year
+		interval = 'Month'
+	else:
+		start = '%s-%s-01' % (year, month)
+		stop = '%s-%s-31' % (year, month)
+		interval = 'Week'
+	
+	return meter(request, mrid, 'ActivePlus', start, stop, interval)
+
+def download(request, id):
+	url = 'https://api.demosteinkjer.no/downloads/%s' % id
+	headers = {'Accept': 'application/json'}
+	req = Request(url, headers=headers)
+
+	dictionary = {}
+
+	try:
+		response = urlopen(req)
+		return HttpResponse(response.read(), content_type='application/json')
+
+	except HTTPError, e:
+		context['errors'] = str(e)
+
+	return render(request, 'meter.html', context)
