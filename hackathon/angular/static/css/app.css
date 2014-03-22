@@ -36,12 +36,17 @@ li.meter-list-li a {
 }
 
 #masthead {
+  text-align: center;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
   font-size: 100pt;
 }
 
 #desc {
-  background: rgba(200,210,220,1);
+  text-align: center;
   margin: 2em;
+}
+
+#measurments_list {
+  text-align: center;
 }
