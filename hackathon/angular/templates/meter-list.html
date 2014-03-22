@@ -1,8 +1,12 @@
-<ul>
-	<li ng-repeat="meter in meters" class="meter-list-li">
-		<a href="#/meter/_[meter.mRID]_">
-			<img src="http://placehold.it/50x50">
-			_[meter.mRID]_
-			</a>
-	</li>
-</ul>
+<div class="row">
+  <div class="columns large-6 push-3 text-center">
+  <ul>
+    <li ng-repeat="meter in meters" class="meter-list-li">
+      <a class="small button" href="#/meter/_[meter.mRID]_">
+        _[meter.mRID]_
+        </a>
+    </li>
+  </ul>
+</div>
+
+</div>
