@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>My first Three.js app</title>
+    <title>PowerHack</title>
     <style>canvas { width: 100%; height: 100% }</style>
   </head>
   <body>
@@ -25,7 +25,8 @@
     prettyBars.lights.init(scene, camera, 500);
     prettyBars.scenebox.init(scene);
 
-    console.log("Years", prettyBars.labels.getYearsArray());
+    var monthview = false;
+
 
     var t = 0;
 
@@ -40,10 +41,6 @@
         var intersects = raycaster.intersectObjects( scene.children );
         if ( intersects.length > 0 ) {
           if ( INTERSECTED != intersects[ 0 ].object ) {
-              if (INTERSECTED) {
-                column_detection(INTERSECTED);
-                navigation_detection(INTERSECTED);
-              }
               INTERSECTED = intersects[ 0 ].object;
           }
         }

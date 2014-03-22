@@ -8,9 +8,14 @@ angular.module('hackathon', [
 	'controllers'
 ]).
 config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/meter', {templateUrl: 'partials/meter-list.html', controller: 'MeterListCtrl'});
+	$routeProvider.when('/meter', {templateUrl: 'template/meter-list', controller: 'MeterListCtrl'});
+	$routeProvider.when('/meter/:meterId', {templateUrl: 'template/meter-detail', controller: 'MeterDetailCtrl'});
 	$routeProvider.otherwise({redirectTo: '/meter'});
-}]);
+}]).config(function($interpolateProvider) {
+  $interpolateProvider.startSymbol('_[');
+  $interpolateProvider.endSymbol(']_');
+});
+
 // config(['$httpProvider', function ($httpProvider) {
 // 	$httpProvider.default.headers.common['Authorization'] = 'Basic '
 // }]);

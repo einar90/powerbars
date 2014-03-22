@@ -1,6 +1,8 @@
 var mouse = new THREE.Vector2(), INTERSECTED;
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
+var active_column = null;
+
 function onDocumentMouseMove( event ) {
   event.preventDefault();
   mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -12,6 +14,11 @@ raycaster = new THREE.Raycaster();
 
 var props_labels = {
   size: 10.0,
+  height: 2
+}
+
+var props_details = {
+  size: 7.0,
   height: 1.5
 }
 
@@ -47,6 +54,31 @@ function draw_height_line (endpos) {
   scene.add( height_line );
 }
 
+var details_mesh = null;
+function draw_details_box (text) {
+  if (details_mesh != null) scene.remove(details_mesh);
+  var details_geo = new THREE.TextGeometry(text, props_details);
+  details_mesh = new THREE.Mesh(details_geo, material_labels);
+  scene.add(details_mesh);
+  details_mesh.position.x = 800;
+  details_mesh.position.y = 240;
+  details_mesh.position.z = 400;
+
+  var details_backdrop_geo = new THREE.PlaneGeometry(45, 20);
+  var details_backdrop_material = new THREE.MeshLambertMaterial(
+  {
+    transparent: true,
+    opacity: 0.0,
+    color: 0x333333,
+  });
+  var details_backdrop = new THREE.Mesh(details_backdrop_geo, details_backdrop_material);
+  scene.add(details_backdrop);
+  details_backdrop.position.x = 815;
+  details_backdrop.position.y = 240;
+  details_backdrop.position.z = 402;
+  details_backdrop.detailsbox = true;
+}
+
 material_highlight = new THREE.MeshPhongMaterial(
 {
   color: 0xf04254,
@@ -54,22 +86,17 @@ material_highlight = new THREE.MeshPhongMaterial(
   shininess: 30,
 });
 
-function draw_height_label_backdrop() {
-  material_backdrop = new THREE.MeshLambertMaterial(
-  {
-    color: 0x333333,
-    transparent: true,
-    opacity: 0.01,
-  });
-  height_backdrop_geo = new THREE.PlaneGeometry(80,30);
-  height_backdrop = new THREE.Mesh(height_backdrop_geo, material_backdrop);
-  scene.add(height_backdrop);
-  height_backdrop.position.x = 622;
-  height_backdrop.position.y = 255;
-  height_backdrop.position.z = 395;
+var prev_intersected = null;
+
+var onMouseClick = function() {
+  navigation_detection(INTERSECTED);
+  column_detection(INTERSECTED);
+  details_detection(INTERSECTED);
 }
 
-var prev_intersected = null;
+
+window.onmousedown = onMouseClick;
+
 
 
 function column_detection (INTERSECTED) {
@@ -77,10 +104,12 @@ function column_detection (INTERSECTED) {
     if (prev_intersected != null) prev_intersected.material = material_column;
     var bar_height = INTERSECTED.geometry.height.toFixed(4);
     draw_height_label(bar_height);
+    draw_details_box("Details");
     var line_endpos = new THREE.Vector3(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
     draw_height_line(line_endpos);
     INTERSECTED.material = material_highlight;
     prev_intersected = INTERSECTED;
+    active_column = INTERSECTED;
   }
 }
 
@@ -96,4 +125,18 @@ function navigation_detection (INTERSECTED) {
       navigate_down();
     }
   };
+}
+
+function details_detection (INTERSECTED) {
+  if (INTERSECTED.detailsbox && INTERSECTED.detailsbox === true) {
+    if (monthview === false) {
+      var year = active_column.year;
+      var month = active_column.month;
+      show_details(year,month);
+    }
+    else {
+      nav_to_yearview();
+    }
+  }
+
 }

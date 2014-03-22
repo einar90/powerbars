@@ -1,4 +1,9 @@
 var delta_year = 0;
+var transition_in_progress = false;
+
+
+var month_names = ["January", "February", "March", "April", "May", "June",
+                   "July", "August", "September", "October", "November", "December"];
 
 var navigation_material = new THREE.MeshBasicMaterial(
 {
@@ -35,6 +40,7 @@ function create_arrow() {
 var arrow_down = create_arrow();
 var arrow_up = create_arrow();
 
+
 scene.add(arrow_down);
 scene.add(arrow_up);
 
@@ -54,39 +60,100 @@ arrow_down.navdown = true;
 arrow_up.navcontrol = true;
 arrow_up.navup = true;
 
+
 function navigate_up () {
-  if (delta_year <= 0) return;
+  if (delta_year <= 0 || transition_in_progress == true) return;
   delta_year -= 1;
-  console.log(delta_year);
   for (var year = 0; year < year_last-year_first; year++) {
     for (var month = 0; month < 12; month++) {
       new TWEEN.Tween(columns[year][month].position).to({
           z: columns[year][month].position.z - 100
-        }, 1000).start();
+        }, 600).start();
     }
+    new TWEEN.Tween(prettyBars.labels.getYearsArray()[year].position)
+          .to({ z: prettyBars.labels.getYearsArray()[year].position.z - 100 }, 600)
+          .start();
   }
   for (var month = 0; month < 12; month++) {
     new TWEEN.Tween(columns[delta_year][month].position).to({
           y: columns[delta_year][month].position.y + 200,
-        }, 1000).start();
+        }, 600).start();
   }
+  new TWEEN.Tween(prettyBars.labels.getYearsArray()[delta_year].position)
+          .to({ y: prettyBars.labels.getYearsArray()[delta_year].position.y + 200 }, 600)
+          .start();
 }
 
 
 function navigate_down () {
-  if (delta_year >= year_last-year_first) return;
+  if (delta_year >= year_last-year_first || transition_in_progress == true) return;
   delta_year += 1;
-  console.log(delta_year);
   for (var year = 0; year < year_last-year_first; year++) {
     for (var month = 0; month < 12; month++) {
-      new TWEEN.Tween(columns[year][month].position).to({
-          z: columns[year][month].position.z + 100,
-        }, 1000).start();
+      new TWEEN.Tween(columns[year][month].position)
+          .to({ z: columns[year][month].position.z + 100 }, 600)
+          .start();
     }
+    new TWEEN.Tween(prettyBars.labels.getYearsArray()[year].position)
+          .to({ z: prettyBars.labels.getYearsArray()[year].position.z + 100 }, 600)
+          .start();
   }
   for (var month = 0; month < 12; month++) {
     new TWEEN.Tween(columns[delta_year-1][month].position).to({
           y: columns[delta_year-1][month].position.y - 200,
-        }, 1000).start();
+        }, 600).start();
+  }
+
+  new TWEEN.Tween(prettyBars.labels.getYearsArray()[delta_year-1].position)
+          .to({ y: prettyBars.labels.getYearsArray()[delta_year-1].position.y - 200 }, 600)
+          .start();
+
+}
+
+function show_details(year,month) {
+  console.log("year: ", year);
+  console.log("month:", month);
+  monthview = true;
+
+  // Hiding year view
+  for (var yr = 0; yr < year_last-year_first; yr++) {
+    for (var mon = 0; mon < 12; mon++) {
+      new TWEEN.Tween(columns[yr][mon].position).to({
+          y: columns[yr][mon].position.y - 200
+        }, 600).start();
+    }
+    new TWEEN.Tween(prettyBars.labels.getYearsArray()[yr].position)
+          .to({ y: prettyBars.labels.getYearsArray()[yr].position.y - 100 }, 600)
+          .start();
+  }
+  for (i = 0; i < 12; i++) {
+    new TWEEN.Tween(prettyBars.labels.getMonthsArray()[i].position)
+          .to({ y: prettyBars.labels.getMonthsArray()[i].position.y - 100 }, 600)
+          .start();
+  }
+  scene.remove(height_line);
+  draw_height_label(month_names[month] + " " + (year_last-year));
+  draw_details_box("Back");
+}
+
+
+function nav_to_yearview() {
+  for (var yr = 0; yr < year_last-year_first; yr++) {
+    for (var mon = 0; mon < 12; mon++) {
+      new TWEEN.Tween(columns[yr][mon].position).to({
+          y: columns[yr][mon].position.y + 200
+        }, 600).start();
+    }
+    new TWEEN.Tween(prettyBars.labels.getYearsArray()[yr].position)
+          .to({ y: prettyBars.labels.getYearsArray()[yr].position.y + 100 }, 600)
+          .start();
+  }
+  for (i = 0; i < 12; i++) {
+    new TWEEN.Tween(prettyBars.labels.getMonthsArray()[i].position)
+          .to({ y: prettyBars.labels.getMonthsArray()[i].position.y + 100 }, 600)
+          .start();
   }
 }
+
+
+

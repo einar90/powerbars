@@ -2,10 +2,11 @@
 prettyBars.labels = (function() {
   // Variables that depend each run
   var stateMap = {
-    scene: null, 
+    scene: null,
     fromYear: null,
     toYear: null,
-    yearLabels: []
+    yearLabels: [],
+    monthLabels: []
   };
 
   var labelSettings = {
@@ -33,7 +34,7 @@ prettyBars.labels = (function() {
     stateMap.fromYear = from;
     stateMap.toYear = to;
   };
-  
+
   initializeMaterials = function() {
     materials.lineMaterial = new THREE.LineBasicMaterial(
     {
@@ -48,6 +49,10 @@ prettyBars.labels = (function() {
 
   getYearLabels = function() {
     return stateMap.yearLabels;
+  };
+
+  getMonthLabels = function() {
+    return stateMap.monthLabels;
   };
 
 
@@ -86,6 +91,7 @@ prettyBars.labels = (function() {
     for (var i = 0; i < 12; i++) {
       var text_label_geo = new THREE.TextGeometry(months[i], labelSettings);
       text_label = new THREE.Mesh(text_label_geo, materials.labelMaterial);
+      stateMap.monthLabels.push(text_label);
       stateMap.scene.add(text_label);
       text_label.rotation.x -= Math.PI * 0.2;
       text_label.position.set(75*i-12,5,60);
@@ -105,15 +111,16 @@ prettyBars.labels = (function() {
     addMonthLabels();
     addYearLines();
   };
-    
-    
-    
+
+
+
   // Public functions
   return {
     init: init,
     getYearsArray: getYearLabels,
+    getMonthsArray: getMonthLabels
   };
-  
+
 
 }());
 
