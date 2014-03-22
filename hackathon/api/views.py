@@ -2,10 +2,14 @@ from BeautifulSoup import BeautifulSoup
 import json
 from urllib import urlencode
 from urllib2 import Request, urlopen, HTTPError
+from re import match
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+def parse(request, state):
+	pass
 
 def home(request, start=0, stop=None, step=10):
 	if not stop: 
@@ -63,38 +67,47 @@ def meter(request, mrid, seriesType='ActivePlus', start='2014-01-01', stop='2014
 				if link['rel'] == 'up':
 					dictionary['up'] = reverse('api.views.meter', args=(mrid, ))
 			else:
-				dictionary['download'] = link['href']
+				m = match('https://api.demosteinkjer.no/downloads/(?P<id>\d+)', link['href']);
+				if m:
+					dictionary['download'] = reverse( 'api.views.download', args=(m.group('id'), ) )
 
 	except HTTPError, e:
 		context['errors'] = str(e)
 
-	return render(request, 'meter.html', context)
-	#return HttpResponse(json.dumps(dictionary, indent=4), content_type='application/json')
+	#return render(request, 'meter.html', context)
+	return HttpResponse(json.dumps(dictionary), content_type='application/json')
+
+def meter_detail(request, mrid):
+	dictionary = {'mrid': mrid}
+
+	return HttpResponse(json.dumps(dictionary), content_type='application/json')
 
 def practical(request, mrid, year=2014, month=None):
 	if not month:
 		start = '%s-01-01' % year
-		stop = '%s-12-31' % year
+		stop = '%s-01-01' % (int(year) + 1)
+		interval = 'Month'
+	elif int(year) == 2014:
+		start = '%s-01-01' % year
+		stop = '%s-04-01' % (int(year) + 1)
 		interval = 'Month'
 	else:
 		start = '%s-%s-01' % (year, month)
-		stop = '%s-%s-31' % (year, month)
+		stop = '%s-%s-01' % (year, int(month) + 1)
 		interval = 'Week'
 	
 	return meter(request, mrid, 'ActivePlus', start, stop, interval)
+	
 
 def download(request, id):
 	url = 'https://api.demosteinkjer.no/downloads/%s' % id
+
 	headers = {'Accept': 'application/json'}
 	req = Request(url, headers=headers)
-
-	dictionary = {}
 
 	try:
 		response = urlopen(req)
 		return HttpResponse(response.read(), content_type='application/json')
 
 	except HTTPError, e:
-		context['errors'] = str(e)
-
-	return render(request, 'meter.html', context)
+		return HttpResponse(str(e))

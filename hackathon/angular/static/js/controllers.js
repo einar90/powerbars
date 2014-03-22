@@ -10,7 +10,7 @@ controllers.controller('MeterListCtrl', ['$scope', '$http', function ($scope, $h
 	$http.get('api', {
 	}).
 	success( function (data) {
-		console.log("JSON-DATA",data);
+		console.log("JSON-DATA", data);
 		$scope.meters = data.meters;
 	});
 }]);
@@ -19,7 +19,7 @@ controllers.controller('MeterDetailCtrl', ['$scope', '$routeParams', '$http', fu
 	$http.get('api/meter/' + $routeParams.meterId, {
 	}).
 	success( function (data) {
-		console.log("JSON-DATA-METER",data);
+		console.log("JSON-DATA", data)
 		$scope.meter = data;
 	});
 }]);
