@@ -1,6 +1,7 @@
 /* app css stylesheet */
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:100);
+@import url(http://fonts.googleapis.com/css?family=Inconsolata);
 
 .menu {
   list-style: none;
@@ -33,6 +34,7 @@ li.meter-list-li {
 }
 
 li.meter-list-li a {
+  font-family: "Inconsolata";
 }
 
 #masthead {
@@ -49,4 +51,8 @@ li.meter-list-li a {
 
 #measurments_list {
   text-align: center;
+}
+
+.navbutt {
+  width: 10em;
 }
