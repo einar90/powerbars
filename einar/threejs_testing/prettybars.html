@@ -39,16 +39,8 @@
         if ( intersects.length > 0 ) {
           if ( INTERSECTED != intersects[ 0 ].object ) {
               if (INTERSECTED) {
-                  if (INTERSECTED.geometry.width == 40 && INTERSECTED.geometry.depth == 40) {
-                    console.log("collided");
-                    if (prev_intersected != null) prev_intersected.material = material_column;
-                    var bar_height = INTERSECTED.geometry.height.toFixed(4);
-                    draw_height_label(bar_height);
-                    var line_endpos = new THREE.Vector3(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
-                    draw_height_line(line_endpos);
-                    INTERSECTED.material = material_highlight;
-                    prev_intersected = INTERSECTED;
-                  }
+                column_detection(INTERSECTED);
+                navigation_detection(INTERSECTED);
               }
               INTERSECTED = intersects[ 0 ].object;
           }

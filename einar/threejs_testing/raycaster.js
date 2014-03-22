@@ -21,7 +21,7 @@ var material_labels = new THREE.MeshBasicMaterial(
 });
 
 var material_line = new THREE.LineBasicMaterial({
-  color: 0x999999,
+  color: 0xffffff,
 });
 
 var bar_height_label_geo = new THREE.TextGeometry("HEIGHT", props_labels);
@@ -70,3 +70,30 @@ function draw_height_label_backdrop() {
 }
 
 var prev_intersected = null;
+
+
+function column_detection (INTERSECTED) {
+  if (INTERSECTED.geometry.width == 40 && INTERSECTED.geometry.depth == 40) {
+    if (prev_intersected != null) prev_intersected.material = material_column;
+    var bar_height = INTERSECTED.geometry.height.toFixed(4);
+    draw_height_label(bar_height);
+    var line_endpos = new THREE.Vector3(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
+    draw_height_line(line_endpos);
+    INTERSECTED.material = material_highlight;
+    prev_intersected = INTERSECTED;
+  }
+}
+
+
+function navigation_detection (INTERSECTED) {
+  if (INTERSECTED.navcontrol && INTERSECTED.navcontrol === true) {
+    if (INTERSECTED.navup && INTERSECTED.navup === true) {
+      console.log("up");
+      navigate_up();
+    }
+    if (INTERSECTED.navdown && INTERSECTED.navdown === true) {
+      console.log("down");
+      navigate_down();
+    }
+  };
+}

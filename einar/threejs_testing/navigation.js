@@ -1,3 +1,5 @@
+var delta_year = 0;
+
 var navigation_material = new THREE.MeshBasicMaterial(
 {
   color: 0x0099cc,
@@ -46,3 +48,45 @@ arrow_down.position.z = -100;
 arrow_down.position.y = 5;
 arrow_down.rotation.y = -Math.PI;
 arrow_down.rotation.x = Math.PI*0.5;
+
+arrow_down.navcontrol = true;
+arrow_down.navdown = true;
+arrow_up.navcontrol = true;
+arrow_up.navup = true;
+
+function navigate_up () {
+  if (delta_year <= 0) return;
+  delta_year -= 1;
+  console.log(delta_year);
+  for (var year = 0; year < year_last-year_first; year++) {
+    for (var month = 0; month < 12; month++) {
+      new TWEEN.Tween(columns[year][month].position).to({
+          z: columns[year][month].position.z - 100
+        }, 1000).start();
+    }
+  }
+  for (var month = 0; month < 12; month++) {
+    new TWEEN.Tween(columns[delta_year][month].position).to({
+          y: columns[delta_year][month].position.y + 200,
+        }, 1000).start();
+  }
+}
+
+
+function navigate_down () {
+  if (delta_year >= year_last-year_first) return;
+  delta_year += 1;
+  console.log(delta_year);
+  for (var year = 0; year < year_last-year_first; year++) {
+    for (var month = 0; month < 12; month++) {
+      new TWEEN.Tween(columns[year][month].position).to({
+          z: columns[year][month].position.z + 100,
+        }, 1000).start();
+    }
+  }
+  for (var month = 0; month < 12; month++) {
+    new TWEEN.Tween(columns[delta_year-1][month].position).to({
+          y: columns[delta_year-1][month].position.y - 200,
+        }, 1000).start();
+  }
+}
