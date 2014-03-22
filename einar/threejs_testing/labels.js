@@ -5,7 +5,8 @@ prettyBars.labels = (function() {
     scene: null, 
     fromYear: null,
     toYear: null,
-    yearLabels: []
+    yearLabels: [],
+    monthLabels: []
   };
 
   var labelSettings = {
@@ -50,6 +51,10 @@ prettyBars.labels = (function() {
     return stateMap.yearLabels;
   };
 
+  getMonthLabels = function() {
+    return stateMap.monthLabels;
+  };
+
 
   addYearLabels = function() {
     // Loop through the years, and create a text ranging (from-to)
@@ -86,6 +91,7 @@ prettyBars.labels = (function() {
     for (var i = 0; i < 12; i++) {
       var text_label_geo = new THREE.TextGeometry(months[i], labelSettings);
       text_label = new THREE.Mesh(text_label_geo, materials.labelMaterial);
+      stateMap.monthLabels.push(text_label);
       stateMap.scene.add(text_label);
       text_label.rotation.x -= Math.PI * 0.2;
       text_label.position.set(75*i-12,5,60);
@@ -112,6 +118,7 @@ prettyBars.labels = (function() {
   return {
     init: init,
     getYearsArray: getYearLabels,
+    getMonthsArray: getMonthLabels
   };
   
 
