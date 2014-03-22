@@ -47,6 +47,7 @@ THIRD_PARTY = (
 
 LOCAL_APPS = (
     'api',
+    'angular',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY + LOCAL_APPS
