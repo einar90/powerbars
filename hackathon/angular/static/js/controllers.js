@@ -79,17 +79,33 @@ controllers.controller('VisualiseMeterCtrl', ['$scope', '$routeParams', '$http',
 
 
 	$scope.getYearLinkID = function(year) {
-		$scope.yearData[year] = null;
+		$scope.yearData = {};
 		// For å få DL link til et år må vi gå til api/meter/meterID/year
 		$http.get('api/meter/' + $routeParams.meterId + '/year/' + year, {
 			}).
 			success( function (data) {
 				//$scope.yearData[year] = data;
+				if(!data.download) { return; }
 				var downloadID = data.download.split('/')[3];
+				console.log("DOwnload ID is:", downloadID);
 
 				$scope.getYearData(year, downloadID)
 
 		});
+	};
+
+	$scope.calculateMonthlyNumbers = function(year) {
+		if( $scope.yearData[year] && $scope.yearData[year] !== "") {
+			var readings = $scope.yearData[year].meterReadings[0].meterReading.readings;
+			console.log("Readings:", readings);
+			for(var i = 0; i < readings.length - 1; i++) {
+				var obj = readings[i];
+				var obj1 = readings[i+1];
+				var date = new Date(obj.timeStamp);
+				$scope.yearData[year][date.getMonth()+1] = obj1.value - obj.value;
+				console.log("Data:", $scope.yearData);
+			}
+		}
 	};
 
 	$scope.getYearData = function(year, year_downloadID) {
@@ -99,15 +115,17 @@ controllers.controller('VisualiseMeterCtrl', ['$scope', '$routeParams', '$http',
 			success( function (data) {
 				//$scope.yearData[year] = data;
 				$scope.yearData[year] = data;
-				console.log("YearData: ",data);
+				console.log("YearData: ", $scope.yearData);
+
+				$scope.calculateMonthlyNumbers(year);
 		});
 	};
 
-	for(var i = 0; i < 3; i++) {
-		console.log("Index:", i);
-		$scope.getYearLinkID(2013 - i);
+	for(var i = 0; i < 5; i++) {
+		$scope.getYearLinkID(2014 - i);
 	}
 
+	console.log("APPPP:", app);
 
 }]);
 

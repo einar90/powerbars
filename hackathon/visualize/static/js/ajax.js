@@ -3,14 +3,30 @@ $scope = {};
 	$scope.getYearLinkID = function(year) {
 		$scope.yearData = {};
 		// For å få DL link til et år må vi gå til api/meter/meterID/year
-		$.get('api/meter/0024ec929321472ca0d71e0ec739d090' + '/year/' + year).
+		$.get('http://localhost:8000/api/meter/0024ec929321472ca0d71e0ec739d090' + '/year/' + year, {
+				
+			}).
 			success( function (data) {
 				//$scope.yearData[year] = data;
 				if(!data.download) { return; }
 				var downloadID = data.download.split('/')[3];
 				console.log("DOwnload ID is:", downloadID);
+				console.log(year,downloadID);
+				var url = 'http://localhost:8000/api/download/' + downloadID;
+				console.log("URL",url);
+				$.get(url, {
+					}).
+				success( function (data) {
+				//$scope.yearData[year] = data;
+				console.log("Trying to getyeardata");
+				$scope.yearData[year] = data;
+				console.log("YearData: ", $scope.yearData);
+				$scope.calculateMonthlyNumbers(year);
 
-				$scope.getYearData(year, downloadID)
+				//
+				}).error(function(msg) {
+					console.log("Inner get failed", msg);
+				});
 
 			}).error(function(msg) {
 				console.log("Failed", msg);
@@ -25,6 +41,7 @@ $scope = {};
 				var obj = readings[i];
 				var obj1 = readings[i+1];
 				var date = new Date(obj.timeStamp);
+				console.log("FUUUUUCK");
 				$scope.yearData[year][date.getMonth()+1] = obj1.value - obj.value;
 				console.log("Data:", $scope.yearData);
 			}
@@ -33,13 +50,13 @@ $scope = {};
 
 	$scope.getYearData = function(year, year_downloadID) {
 		// Downloads hentes fra ...
-		$.get('api/download/' + year_downloadID, {
+		$.get('http://localhost:8000/api/download/' + year_downloadID, {
 			}).
 			success( function (data) {
 				//$scope.yearData[year] = data;
+				console.log("Trying to getyeardata");
 				$scope.yearData[year] = data;
 				console.log("YearData: ", $scope.yearData);
-				console.log("Trying to getyeardata");
 				$scope.calculateMonthlyNumbers(year);
 
 				//
@@ -48,7 +65,7 @@ $scope = {};
 
 	$scope.initialize = function() {
 		console.log("scope initialized");
-		for(var i = 0; i < 5; i++) {
+		for(var i = 0; i < 1; i++) {
 			console.log("RUnning", i);
 			$scope.getYearLinkID(2014 - i);
 		}

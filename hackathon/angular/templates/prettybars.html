@@ -1,22 +1,25 @@
 {% load staticfiles %}
-<script src="{% static js/visualization/three.js %}"></script>
-<script src="{% static js/visualization/Tween.js %}"></script>
-<script src="{% static js/visualization/helvetiker_regular.typeface.js %}"></script>
+<script src="{% static 'js/visualization/three.js' %}"></script>
+<script src="{% static 'js/visualization/Tween.js' %}"></script>
+<script src="{% static 'js/visualization/helvetiker_regular.typeface.js' %}"></script>
 
 <div id="container"></div>
 
-<script src="{% static js/visualization/props.js %}"></script>
-<script src="{% static js/visualization/setup.js %}"></script>
-<script src="{% static js/visualization/scenebox.js %}"></script>
-<script src="{% static js/visualization/create_cols.js %}"></script>
-<script src="{% static js/visualization/labels.js %}"></script>
-<script src="{% static js/visualization/lights.js %}"></script>
-<script src="{% static js/visualization/raycaster.js %}"></script>
-<script src="{% static js/visualization/navigation.js %}"></script>
+<div oc-lazy-load="{name: 'TestModule', files: ["{% static 'js/visualization/props.js' %}", "{% static 'js/visualization/setup.js' %}"], template: 'partials/testLazyLoad.html'}"></div>
+
+{#<script src="{% static 'js/visualization/props.js' %}"></script>#}
+{#<script src="{% static 'js/visualization/setup.js' %}"></script>#}
+<script src="{% static 'js/visualization/scenebox.js' %}"></script>
+<script src="{% static 'js/visualization/create_cols.js' %}"></script>
+<script src="{% static 'js/visualization/labels.js' %}"></script>
+<script src="{% static 'js/visualization/lights.js' %}"></script>
+<script src="{% static 'js/visualization/raycaster.js' %}"></script>
+<script src="{% static 'js/visualization/navigation.js' %}"></script>
 
 
 
 <script>
+$( function () {
 prettyBars.labels.init(scene, 2010, 2014);
 prettyBars.lights.init(scene, camera, 500);
 prettyBars.scenebox.init(scene);
@@ -58,5 +61,6 @@ var t = 0;
   }
 
   render();
+});
 
 </script>

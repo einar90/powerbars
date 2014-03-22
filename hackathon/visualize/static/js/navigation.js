@@ -131,7 +131,6 @@ function show_details(year,month) {
           .to({ y: prettyBars.labels.getMonthsArray()[i].position.y - 100 }, 600)
           .start();
   }
-  scene.remove(height_line);
   draw_height_label(month_names[month] + " " + (year_last-year));
   draw_details_box("Back");
   draw_month(month);
@@ -167,6 +166,8 @@ function nav_to_yearview() {
           .to({ y: prettyBars.labels.getMonthsArray()[i].position.y + 100 }, 600)
           .start();
   }
+  monthview = false;
+  draw_height_label("");
 }
 
 
